@@ -45,6 +45,7 @@ export default {
       }
       let m = L.marker([lat, lng], options)
       m.addTo(this.mapObject)
+      return m
     },
     // add button to the map
     addButton (icon, fn) {
