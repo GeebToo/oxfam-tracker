@@ -7,7 +7,7 @@ class Response {
   }
 }
 
-const host = 'http://localhost:8000/'
+const host = 'http://localhost:8080/'
 
 let numberOfRequestsInProgress = 0
 

@@ -24,7 +24,6 @@ const GEOJSON_STYLE = {
 }
 
 export default {
-
   beforeCreate () {
     this.layers = {
       osm: L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'})
@@ -38,6 +37,14 @@ export default {
     // set cneter of the map to specified lng, lat and zoom
     setCenterToLngAndLat (lng, lat, zoom) {
       this.mapObject.setView(new L.LatLng(lat, lng), zoom)
+    },
+    addMarker (lng, lat, icon) {
+      let options = {}
+      if (icon) {
+        options = {icon: L.icon(icon)}
+      }
+      let m = L.marker([lat, lng], options)
+      m.addTo(this.mapObject)
     },
     // add button to the map
     addButton (icon, fn) {
@@ -57,28 +64,22 @@ export default {
       return marker
     },
     // load geojson to the map with cache management
-    loadJSON: function (id, factor, cbk) {
-      // Simplification factor
-      if (!factor) {
-        factor = 0
-      }
-
+    loadJSON: function (url, cbk) {
       // Process Payload to create a Leaflet geojson layer
       // Add layer to the map and exectute callback if needed
       let processBody = function (body) {
         let layer = L.geoJson(body, {style: GEOJSON_STYLE})
         layer.addTo(this.mapObject)
-        layer.refId = id
         if (cbk) {
           cbk(layer)
         }
       }.bind(this)
 
       // retrieving geojson and add it to cache
-      api.get('/tracks/' + id + '/geojson?factor=' + factor).then((response) => {
+      api.get(url).then((response) => {
         processBody(response.body)
       }, (response) => {
-        console.error('Error while trying to download : %d', id)
+        console.error('Error while trying to download : %d', url)
       })
     }
   },
