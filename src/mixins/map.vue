@@ -1,5 +1,4 @@
 <script>
-import api from '../services/api'
 import bus from '../components/bus-event'
 import L from 'leaflet/dist/leaflet-src.js'
 import 'leaflet-easybutton/src/easy-button.js'
@@ -20,7 +19,7 @@ L.Icon.Default.mergeOptions({
 const GEOJSON_STYLE = {
   'color': '#ff0000',
   'weight': 3,
-  'opacity': 0.55
+  'opacity': 0.70
 }
 
 export default {
@@ -71,15 +70,16 @@ export default {
       let processBody = function (body) {
         let layer = L.geoJson(body, {style: GEOJSON_STYLE})
         layer.addTo(this.mapObject)
+        // callback
         if (cbk) {
-          cbk(layer)
+          cbk(layer, body.coordinates)
         }
       }.bind(this)
 
       // retrieving geojson and add it to cache
-      api.get(url).then((response) => {
-        processBody(response.body)
-      }, (response) => {
+      this.$http.get(url).then(function (resp) {
+        processBody(resp.body)
+      }, function (resp) {
         console.error('Error while trying to download : %d', url)
       })
     }
