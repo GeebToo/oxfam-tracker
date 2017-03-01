@@ -22,14 +22,16 @@ Vue.filter('toHHMM', function (value) {
   if (h === 0) {
     return m
   } else if (m === 0) {
-    return h + ' h'
+    return h + ' h 00'
   } else {
     return h + ' h ' + m
   }
 })
 
 Vue.filter('formatDate', function (value) {
-  if (value) {
+  if (value === '0001-01-01T00:00:00Z') {
+    return '-'
+  } else if (value) {
     return moment(String(value)).format('DD/MM HH:mm')
   }
 })

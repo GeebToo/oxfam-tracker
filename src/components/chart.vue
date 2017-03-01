@@ -57,6 +57,7 @@ export default {
       },
       yAxis: {
         min: 0.00,
+        max: 2500.00,
         title: {
           text: null
         },

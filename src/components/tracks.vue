@@ -2,13 +2,16 @@
   <div class="wrapper">
     <el-tabs v-model="activeName">
       <el-tab-pane name="logo" :disabled="true">
-        <span slot="label"><img src="../assets/logo-156x60px.png" style="height:20px;"> pendant l'OXFAM</span>
+        <span slot="label">Suivez <img src="../assets/logo-156x60px.png" style="height:20px;"> durant l'OXFAM</span>
       </el-tab-pane>
       <el-tab-pane name="first">
         <span slot="label"><i class="fa fa-map-marker"></i> Carte</span>
         <div class="dashboard">
           <section class="dashboard-stats">
             <div class="inner">
+              <header>
+                <h1>Récapitulatif : </h1>
+              </header>
               <ul class="stats-highlight">
                 <li class="stat-item">
                   <div class="stat-icon">
@@ -77,7 +80,11 @@ export default {
   data () {
     return {
       activeName: 'first',
-      stats: {},
+      stats: {
+        distance: 0,
+        time: 0,
+        updateAt: '0001-01-01T00:00:00Z'
+      },
       interval: null,
       teamMarker: null,
       layer: null
@@ -107,7 +114,7 @@ export default {
         if (locations) {
           let lastlocation = locations.length - 1
           me.teamMarker = me.addMarker(locations[lastlocation][0], locations[lastlocation][1], TEAM_ICON)
-          me.teamMarker.bindPopup('<b>Équipes</b>')
+          me.teamMarker.bindPopup('<b>XeeTrooper</b>')
         }
       })
     },
