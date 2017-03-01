@@ -50,23 +50,23 @@
 import map from '../mixins/map'
 import Chart from './chart'
 
-const Vacheresse = {
-  lng: 6.673627,
-  lat: 46.324027
-}
+const PC = [
+  {'lng': 6.792406, 'lat': 46.218621},
+  {'lng': 6.754709, 'lat': 46.245966},
+  {'lng': 6.718994, 'lat': 46.279446},
+  {'lng': 6.787994, 'lat': 46.294959},
+  {'lng': 6.821114, 'lat': 46.254709},
+  {'lng': 6.853990, 'lat': 46.237835},
+  {'lng': 6.820422, 'lat': 46.254543},
+  {'lng': 6.798970, 'lat': 46.291389},
+  {'lng': 6.719972, 'lat': 46.279917}
+]
+
 const TEAM_ICON = {
-  iconUrl: './static/marker-blue.png',
-  iconSize: [64, 64],
-  iconAnchor: [32, 64],
-  popupAnchor: [0, -64]
-}
-const GREEN_ICON = {
-  iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
+  iconUrl: './static/pin-green.png',
+  iconSize: [40, 48],
+  iconAnchor: [20, 48],
+  popupAnchor: [1, -48]
 }
 
 export default {
@@ -79,7 +79,6 @@ export default {
       activeName: 'first',
       stats: {},
       interval: null,
-      startMarker: null,
       teamMarker: null,
       layer: null
     }
@@ -100,25 +99,44 @@ export default {
         if (me.teamMarker) {
           me.mapObject.removeLayer(me.teamMarker)
         }
-        if (me.startMarker) {
-          me.mapObject.removeLayer(me.startMarker)
-        }
         me.layer = layer
         if (center) {
           me.mapObject.fitBounds(layer.getBounds())
         }
-        let lastlocation = locations.length - 1
-        me.startMarker = me.addMarker(locations[0][0], locations[0][1], GREEN_ICON)
-        me.startMarker.bindPopup('<b>Départ</b>')
-        me.teamMarker = me.addMarker(locations[lastlocation][0], locations[lastlocation][1], TEAM_ICON)
-        me.teamMarker.bindPopup('<b>Equipe</b>')
+
+        if (locations) {
+          let lastlocation = locations.length - 1
+          me.teamMarker = me.addMarker(locations[lastlocation][0], locations[lastlocation][1], TEAM_ICON)
+          me.teamMarker.bindPopup('<b>Équipes</b>')
+        }
+      })
+    },
+    AddRunMarker () {
+      PC.forEach((pc, index) => {
+        let pinName = 'pin-pc' + index + '.png'
+        let pinLegend = '<b>Point de contrôle ' + index + '</b>'
+        if (index === 0) {
+          pinName = 'pin-start.png'
+          pinLegend = '<b>Départ</b>'
+        } else if (index === PC.length - 1) {
+          pinName = 'pin-end.png'
+          pinLegend = '<b>Arrivée</b>'
+        }
+        let mpc = this.addMarker(pc.lng, pc.lat, {
+          iconUrl: './static/' + pinName,
+          iconSize: [40, 48],
+          iconAnchor: [20, 48],
+          popupAnchor: [1, -48]
+        })
+        mpc.bindPopup(pinLegend)
       })
     }
   },
   created () {
   },
   mounted () {
-    this.setCenterToLngAndLat(Vacheresse.lng, Vacheresse.lat)
+    this.setCenterToLngAndLat(PC[0].lng, PC[0].lat)
+    this.AddRunMarker()
     this.updateMap(true)
     let self = this
     this.interval = setInterval(function () {
