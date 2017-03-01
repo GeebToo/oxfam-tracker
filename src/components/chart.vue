@@ -14,7 +14,8 @@ export default {
   data () {
     return {
       elevations: {},
-      elevationChart: null
+      elevationChart: null,
+      interval: null
     }
   },
   methods: {
@@ -108,8 +109,14 @@ export default {
         data: []
       }]
     })
-
     this.updateChart()
+    let self = this
+    this.interval = setInterval(function () {
+      self.updateChart()
+    }, 20000)
+  },
+  beforeDestroy: function () {
+    clearInterval(this.intervalChart)
   }
 }
 </script>
