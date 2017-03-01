@@ -34,7 +34,7 @@ Vue.filter('formatDate', function (value) {
   }
 })
 
-Vue.http.options.root = 'http://192.168.1.108:8042/teams/1'
+Vue.http.options.root = 'http://10.10.9.120:8042/teams/1'
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

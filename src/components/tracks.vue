@@ -40,6 +40,7 @@
       </el-tab-pane>
       <el-tab-pane label="Config" name="second">
         <span slot="label"><i class="fa fa-area-chart"></i> Dénivelé</span>
+        <chart></chart>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -47,6 +48,7 @@
 
 <script>
 import map from '../mixins/map'
+import Chart from './chart'
 
 const Vacheresse = {
   lng: 6.673627,
@@ -69,6 +71,9 @@ const GREEN_ICON = {
 
 export default {
   mixins: [map],
+  components: {
+    Chart
+  },
   data () {
     return {
       activeName: 'first',
@@ -150,7 +155,7 @@ export default {
     background-color: #99cc00;
   }
 
-  .dashboard {
+  .dashboard, .chart {
     position: fixed;
     top: 55px;
     left: 0;
@@ -158,7 +163,7 @@ export default {
     bottom: 0;
   }
 
-  .dashboard > section {
+  .dashboard > section, .chart > section {
     display: -webkit-box;
     display: -moz-box;
     display: box;
@@ -186,7 +191,7 @@ export default {
     }
   }
 
-  .dashboard-map {
+  .dashboard-map, .chart-container {
     position: relative;
     height: 100%;
   }
