@@ -17,9 +17,9 @@ L.Icon.Default.mergeOptions({
 })
 
 const GEOJSON_STYLE = {
-  'color': '#ff0000',
-  'weight': 3,
-  'opacity': 0.70
+  'color': '#CA3F45',
+  'weight': 4,
+  'opacity': 1
 }
 
 export default {
