@@ -120,9 +120,6 @@ export default {
   }
 }
 </script>
+
 <style type="text/css">
-  #container {
-    width: 100%;
-    height: 80%;
-  }
 </style>
