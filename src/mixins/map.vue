@@ -23,15 +23,26 @@ const GEOJSON_STYLE = {
 }
 
 export default {
-  beforeCreate () {
-    this.layers = {
+  created () {
+    this.ign = {
+      osm: L.tileLayer(this.layerUrl('0jhmxgdy5xmyy32sr4o1c2th', 'GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-EXPRESS.STANDARD'),
+        {attribution: '&copy; <a href="http://www.ign.fr/">IGN</a>'})
+    }
+    this.openStreetMap = {
       osm: L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'})
+
     }
   },
   methods: {
     // return the geojson default style
     getGeojsonStyle () {
       return GEOJSON_STYLE
+    },
+    layerUrl (key, layer) {
+      return 'http://wxs.ign.fr/' + key +
+              '/geoportail/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&' +
+              'LAYER=' + layer + '&STYLE=normal&TILEMATRIXSET=PM&' +
+              'TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fjpeg'
     },
     // set cneter of the map to specified lng, lat and zoom
     setCenterToLngAndLat (lng, lat, zoom) {
@@ -88,9 +99,10 @@ export default {
     let me = this
     this.mapObject = L.map('map', {
       center: [50.505, 3.36],
-      layers: [this.layers.osm],
+      layers: [this.ign.osm],
       zoom: 13
     })
+    L.control.layers({'IGN Topo Express': this.ign.osm, 'OpenStreetMap': this.openStreetMap.osm}, {}, {position: 'topleft'}).addTo(this.mapObject)
     bus.$on('map.center', function (lng, lat) {
       me.setCenterToLngAndLat(lng, lat)
     })
