@@ -39,7 +39,7 @@ export default {
       return GEOJSON_STYLE
     },
     layerUrl (key, layer) {
-      return 'http://wxs.ign.fr/' + key +
+      return 'https://wxs.ign.fr/' + key +
               '/geoportail/wmts?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&' +
               'LAYER=' + layer + '&STYLE=normal&TILEMATRIXSET=PM&' +
               'TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fjpeg'
