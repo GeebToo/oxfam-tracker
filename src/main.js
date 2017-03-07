@@ -36,7 +36,7 @@ Vue.filter('formatDate', function (value) {
   }
 })
 
-Vue.http.options.root = 'https://oxfam.xee.com/teams/1'
+// Vue.http.options.root = 'https://oxfam.xee.com/teams/1'
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

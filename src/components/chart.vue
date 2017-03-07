@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     updateChart () {
-      this.$http.get('elevations').then(function (resp) {
+      this.$http.get('./static/elevations.json').then(function (resp) {
         this.elevations = resp.data.elevation
         this.elevationChart.series[0].setData(this.elevations)
       }, function (resp) {

@@ -56,8 +56,8 @@ import Chart from './chart'
 const PC = [
   {'lng': 6.792406, 'lat': 46.218621},
   {'lng': 6.754709, 'lat': 46.245966},
-  {'lng': 6.718994, 'lat': 46.279446},
-  {'lng': 6.787994, 'lat': 46.294959},
+  {'lng': 6.716597, 'lat': 46.279269},
+  {'lng': 6.788079, 'lat': 46.295589},
   {'lng': 6.821114, 'lat': 46.254709},
   {'lng': 6.853990, 'lat': 46.237835},
   {'lng': 6.820422, 'lat': 46.254543},
@@ -92,14 +92,14 @@ export default {
   },
   methods: {
     updateMap (center) {
-      this.$http.get('stats').then(function (resp) {
+      this.$http.get('./static/stats.json').then(function (resp) {
         this.stats = resp.data
       }, function (resp) {
         console.error('Error while trying to get stats')
       })
 
       let me = this
-      this.loadJSON('locations', function (layer, locations) {
+      this.loadJSON('./static/locations.json', function (layer, locations) {
         if (me.layer) {
           me.layer.clearLayers()
         }
